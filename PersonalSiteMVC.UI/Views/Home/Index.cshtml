@@ -160,9 +160,9 @@
     <!-- ======= Resume Section ======= -->
     <section id="resume" class="resume">
         <div class="container">
-
             <div class="section-title">
                 <h2>Resume</h2>
+            <a href="~/Content/assets/Justin Peacock Resume.docx" class="btn btn-dark" >Download My Resume</a>
                 <!--<p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>-->
             </div>
 
@@ -268,11 +268,18 @@
 
                         <div class="swiper-slide">
                             <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
-
-
                                 <h3>Storefront</h3>
                                 <h4>This project is to help understand SQL and converting a front end application to a full stack application.</h4>
-                                <h4>Storefront Link</h4>
+                                <h4><a href="http://starfront.projectpeacock.net/" target="_blank">Subdomain</a></h4>
+                                <h4><a href="https://github.com/JustinPeacoc/StoreFront/" target="_blank">Github</a></h4>
+                            </div>
+                        </div><!-- End project item --> 
+                        <div class="swiper-slide">
+                            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
+                                <h3>To Do Api</h3>
+                                <h4>Created a "To Do" API with a list of items "to do".</h4>
+                                <h4><a href="http://todo.projectpeacock.net/" target="_blank">Subdomain</a></h4>
+                                <h4><a href="https://github.com/JustinPeacoc/ToDoAPI" target="_blank">Github</a></h4>
                             </div>
                         </div><!-- End project item -->
                         <!--<div class="swiper-slide">
@@ -528,7 +535,7 @@
 
                 </div>
 
-                <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
+                <div class="col-lg-6">
                     @*<form action="forms/contact.php" method="post" role="form" class="php-email-form">
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -572,31 +579,33 @@
 </main><!-- End #main -->
 
 @section scripts {
-   <script class="contactForm">
-       $("#ContactCreateForm").submit(function (e) {
-           var formData = $(this).serializeArray();
-           e.preventDefault();
-           $("#MessageContent").html("<div class= 'alert alert-info'>Please wait while your message is sending.</div>");
-           $.ajax({
-               url: "@Url.Action("ContactAjax", "Home")",
-               type: "POST",
-               data: formData,
-               dataType: "json",
-               success: function (data) {
-                   $("#MessageContent").hide();
-                   $("#contactConfirmation").load('@Url.Action("ContactConfirmation", "Home")',
-                       { name: data.Name, email: data.Email }).show();
-                   $("#ContactCreateForm")[0].reset();
-                   setTimeout(function () {
-                       $("#contactConfirmation").fadeToggle("slow");
-                   }, 5000);
-               },
-               error: function (e) {
-                   $("#MessageContent").html(
-                       "<div class = 'alert alert-warning'>There was an error. Please try again later.</div>"
-                   );
-               }
-           });
-       });
-    </script>
+<script>
+        //*****AJAX*****//
+        
+
+        $("#ContactCreateForm").submit(function (e) {
+            var formData = $(this).serializeArray();
+            e.preventDefault();
+            $("#MessageContent").html("<div class='alert alert-info'>Please wait while your message is sent...</div>");
+            $.ajax({
+                url: "@Url.Action("ContactAjax", "Home")",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    $("#MessageContent").hide();
+                    $("#contactConfirmation").load('@Url.Action("ContactConfirmation", "Home")', { name: data.Name, email: data.Email }).show();
+                    $("#ContactCreateForm")[0].reset();
+                    setTimeout(function () {
+                        $("#contactConfirmation").fadeToggle("slow");
+                    }, 500);
+                },
+                error: function (e) {
+                    $("#MessageContent").html(
+                        "<div class='alert alert-warning'>There was an error. Please try again later or contact the site admin.</div>"
+                    );
+                }
+            });
+        });
+</script>
     }
